@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="JSHintConfiguration">
-    <option bitwise="true" />
-    <option curly="true" />
-    <option eqeqeq="true" />
-    <option forin="true" />
-    <option noarg="true" />
-    <option noempty="true" />
-    <option nonew="true" />
-    <option strict="true" />
-    <option undef="true" />
-    <option browser="true" />
-    <option jquery="true" />
-    <option maxerr="50" />
-  </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -32,9 +18,6 @@
         </selected-state>
       </profile-state>
     </entry>
-  </component>
-  <component name="ProjectResources">
-    <default-html-doctype>jar:file:\C:\Program Files (x86)\JetBrains\PhpStorm 5.0.1\lib\webide.jar!\resources\html5-schema\html5.rnc</default-html-doctype>
   </component>
   <component name="ProjectRootManager" version="2" />
   <component name="masterDetails">

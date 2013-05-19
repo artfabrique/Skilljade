@@ -118,7 +118,6 @@ window.fbAsyncInit = function() {
         console.log('auth.statusChange');
     });
 
-    FB.logout();
     FB.getLoginStatus(function(response){
         if (response.status === 'connected') {
             // the user is logged in and has authenticated your
@@ -128,16 +127,17 @@ window.fbAsyncInit = function() {
             // and signed request each expire
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
-
-
+            console.log("status connected")
+            location.href = "app.html";
+            return;
 
         } else if (response.status === 'not_authorized') {
-
+            console.log("status NA")
             // the user is logged in to Facebook,
             // but has not authenticated your app
         } else {
             // the user isn't logged in to Facebook.
-
+            console.log(response);
         }
 
         if(response) {

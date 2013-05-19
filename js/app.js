@@ -19,11 +19,75 @@ var SkillJade = {
     User: {},
 
     Subscribe : function() {
-        $('lnk-sign-in').on('click',function() {
 
+
+        $('.lnk-sign-in').on('click',function() {
+            location.href = "app.html";
+        });
+
+        $('.lnk-sign-up').on('click',function() {
+
+            console.log();
+            //if($('.form-sign-up #email').value
+            var data = {
+                email : $('.form-sign-up #email').val()?$('.form-sign-up #email').val():false,
+                password :  ($('.form-sign-up #password').val() == $('.form-sign-up #password2').val()) && $('.form-sign-up #password').val().length>0 ? $('.form-sign-up #password').val() : false
+            };
+console.log(data);
+            if(!data.email||!data.password) {
+                alert("Please fill form correctly!");
+            }else {
+
+
+
+            SkillJade.User.set("email",data.email);
+            SkillJade.User.set("username",data.email);
+            SkillJade.User.set("password",data.password);
+            SkillJade.User.signUp(null, {
+                success: function(user) {
+                    // Hooray! Let them use the app now.
+                    location.href = "app.html";
+                },
+                error: function(user, error) {
+                    // Show the error message somewhere and let the user try again.
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            });
+
+
+
+            }
+        });
+
+        $('.lnk-sign-up-fb').on('click',function() {
+            if (!Parse.FacebookUtils.isLinked(SkillJade.User)) {
+                Parse.FacebookUtils.link(SkillJade.User, null, {
+                    success: function(user) {
+                        alert("Woohoo, user logged in with Facebook!");
+                        console.log(user);
+                        location.href = "app.html";
+                    },
+                    error: function(user, error) {
+                        alert("User cancelled the Facebook login or did not fully authorize.");
+                        console.log(error);
+                    }
+                });
+            }
         });
     }
 
+/*
+ Parse.FacebookUtils.logIn("user_likes,email", {
+ success: function(user) {
+ console.log("success");
+ // Handle successful login
+ },
+ error: function(user, error) {
+ // Handle errors and cancellation
+ console.log("error");
+ }
+ });
+*/
 
 };
 
@@ -36,8 +100,8 @@ window.fbAsyncInit = function() {
     //console.log("FBAsyncInit.call()");
     Parse.FacebookUtils.init({
         appId      : '128071054057984', // Facebook App ID
-        channelUrl : 'http://stage.skilljade.com', // Channel File
-        status     : false, // check login status
+        channelUrl : 'http://stage.skilljade.com/app.html', // Channel File
+        status     : true, // check login status
         cookie     : true, // enable cookies to allow Parse to access the session
         xfbml      : true  // parse XFBML
     });
@@ -54,6 +118,7 @@ window.fbAsyncInit = function() {
         console.log('auth.statusChange');
     });
 
+    FB.logout();
     FB.getLoginStatus(function(response){
         if (response.status === 'connected') {
             // the user is logged in and has authenticated your
@@ -64,46 +129,19 @@ window.fbAsyncInit = function() {
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
 
-            if (!Parse.FacebookUtils.isLinked(SkillJade.User)) {
-                Parse.FacebookUtils.link(SkillJade.User, null, {
-                    success: function(user) {
-                        alert("Woohoo, user logged in with Facebook!");
-                    },
-                    error: function(user, error) {
-                        alert("User cancelled the Facebook login or did not fully authorize.");
-                    }
-                });
-            }
+
 
         } else if (response.status === 'not_authorized') {
-            Parse.FacebookUtils.logIn("user_likes,email", {
-                success: function(user) {
-                    console.log("success not_authorized");
-                    // Handle successful login
-                },
-                error: function(user, error) {
-                    // Handle errors and cancellation
-                    console.log("error not_authorized");
-                }
-            });
+
             // the user is logged in to Facebook,
             // but has not authenticated your app
         } else {
             // the user isn't logged in to Facebook.
-            Parse.FacebookUtils.logIn("user_likes,email", {
-                success: function(user) {
-                    console.log("success");
-                    // Handle successful login
-                },
-                error: function(user, error) {
-                    // Handle errors and cancellation
-                    console.log("error");
-                }
-            });
+
         }
 
         if(response) {
-
+            SkillJade.Subscribe();
         }
 
     });

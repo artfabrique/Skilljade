@@ -16,8 +16,18 @@ var SkillJade = {
         SkillJade.User = new Parse.User();
     },
 
-    User: {}
+    User: {},
+
+    Subscribe : function() {
+        $('lnk-sign-in').on('click',function() {
+
+        });
+    }
+
+
 };
+
+//var Preloader =
 
 
 

@@ -17,8 +17,25 @@ var SkillJade = {
 
         if(SkillJade.User) {
             // all correct;
+            var Test = Parse.Object.extend("Test");
+
+            var TestCollection = Parse.Collection.extend({
+                model: Test
+            });
 
 
+
+            var collection = new TestCollection();
+            collection.fetch({
+                success: function(collection) {
+                    collection.each(function(object) {
+                        console.warn(object);
+                    });
+                },
+                error: function(collection, error) {
+                    // The collection could not be retrieved.
+                }
+            });
 
 
         }else {
@@ -83,8 +100,8 @@ window.fbAsyncInit = function() {
             // and signed request each expire
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
-            console.log("status connected")
-            SkillJade.Subscribe();
+            console.log("status connected");
+            //SkillJade.Subscribe();
 
         } else if (response.status === 'not_authorized') {
             console.log("status NA")
